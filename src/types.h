@@ -11,7 +11,7 @@
 /* 定义玩家数据的结构体 */
 typedef struct Player{
 	int id;		// 玩家编号，从1开始
-	char *name;	// 玩家姓名
+	char name[7];	// 玩家姓名
 	int money;	// 玩家所拥有的资金
 	int point;	//玩家所拥有的点数
 	unsigned int pos;	// 玩家当前位置，0为起点，向顺时针方向增长坐标
