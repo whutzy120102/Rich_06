@@ -40,7 +40,7 @@ typedef struct Game{
 	int init_money;	// 每位玩家初始资金
 	int player_num;	// 玩家个数
 	Player players[MAX_PLAYER_NUM];	// 玩家数据结构体数组
-	int current_player_index;	// 当前玩家的编号
+	int current_player_index;	// 当前玩家在结构体数组中的下标
 	unsigned int place_num;	// 地图长度，即有效地块个数
 	Place map[MAX_PLACE_NUM];	// 地块数据结构体数组
 }Game;	// 游戏数据
