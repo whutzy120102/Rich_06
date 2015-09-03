@@ -24,4 +24,12 @@ int get_roll_number();
 */
 int get_tools_amount(Player *player);
 
+/*
+* 函数 void str_tolower(char *str);
+* 参数：str 指向字符串的指针
+* 作用：将字符串中的字母改为小写形式
+* 作者：张泰然
+*/
+void str_tolower(char *str);
+
 #endif

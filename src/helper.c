@@ -1,5 +1,6 @@
 #include "helper.h"
 #include <stdlib.h>
+#include <ctype.h>
 
 /*
 * 函数 get_roll_number();
@@ -22,4 +23,24 @@ int get_roll_number()
 int get_tools_amount(Player *player)
 {
 	return player -> block_amount + player -> bomb_amount + player -> robot_amount;
+}
+
+/*
+* 函数 void str_tolower(char *str);
+* 参数：str 指向字符串的指针
+* 作用：将字符串中的字母改为小写形式
+* 作者：张泰然
+*/
+void str_tolower(char *str)
+{
+	char *temp = str;	// 用来指向字符串的指针
+
+	while (*temp != '\0')
+	{
+		if (isalpha(*temp))
+		{
+			*temp = tolower(*temp);	// 将字母改为小写形式
+		}
+		temp++;
+	}
 }
