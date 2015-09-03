@@ -8,12 +8,13 @@
 #include "types.h"
 
 /*
-* 函数 char *get_command();
+* 函数 void get_command(char *buffer, int length);
+* 参数：buffer 用来存储输入的命令的缓冲区
+* 参数：length 缓冲区的长度
 * 作用：获取当前玩家输入的操作命令
-* 返回值：指向当前玩家输入的操作命令字符串的指针
-* 作者：
+* 作者：张泰然
 */
-char *get_command();
+void get_command(char *buffer, int length);
 
 /*
 * 函数 void parse_command(char *command);

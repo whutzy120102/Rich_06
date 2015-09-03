@@ -3,15 +3,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
-* 函数 char *get_command();
-* 作用：获取当前玩家输入的操作命令
-* 返回值：指向当前玩家输入的操作命令字符串的指针
-* 作者：
-*/
-char *get_command()
-{
 
+/*
+* 函数 void get_command(char *buffer, int length);
+* 参数：buffer 用来存储输入的命令的缓冲区
+* 参数：length 缓冲区的长度
+* 作用：获取当前玩家输入的操作命令
+* 作者：张泰然
+*/
+void get_command(char *buffer, int length)
+{
+	char *temp = buffer;	// 用来指向缓冲区的指针
+
+	fgets(buffer, length, stdin);
+	while (*temp != '\0')
+	{
+		if (*temp == '\n')
+		{
+			*temp = '\0';	// 将换行符处理为'\0'
+		}
+		temp++;	// 指向下一个字符
+	}
 }
 
 /*
