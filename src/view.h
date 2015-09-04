@@ -23,19 +23,4 @@ void output_map(Game *game);
 */
 void show_current_player(Game *game);
 
-/**
-*初始化地图 
-**/
-char ** init_map(Game *game);
-
-/**
-*在map中标注玩家所在位置 
-**/
-void player_place(Player player,char **map);
-
-/**
-*打印地图 
-**/
-void print(char **map);
-
 #endif
