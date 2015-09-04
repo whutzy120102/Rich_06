@@ -6,7 +6,7 @@
 #define _TYPES_H_
 
 #define MAX_PLAYER_NUM 4		// 玩家人数的最大值
-#define MAX_PLACE_NUM 68		// 地块的数量
+#define MAX_PLACE_NUM 70		// 地块的数量
 
 /* 定义玩家数据的结构体 */
 typedef struct Player{
