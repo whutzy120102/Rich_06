@@ -37,10 +37,7 @@ void str_tolower(char *str)
 
 	while (*temp != '\0')
 	{
-		if (isalpha(*temp))
-		{
-			*temp = tolower(*temp);	// 将字母改为小写形式
-		}
+		*temp = tolower(*temp);	// 将字母改为小写形式
 		temp++;
 	}
 }
