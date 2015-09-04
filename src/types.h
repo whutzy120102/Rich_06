@@ -6,12 +6,12 @@
 #define _TYPES_H_
 
 #define MAX_PLAYER_NUM 4		// 玩家人数的最大值
-#define MAX_PLACE_NUM 68		// 地块的数量
+#define MAX_PLACE_NUM 70		// 地块的数量
 
 /* 定义玩家数据的结构体 */
 typedef struct Player{
 	int id;		// 玩家编号，从1开始
-	char *name;	// 玩家姓名
+	char name[7];	// 玩家姓名
 	int money;	// 玩家所拥有的资金
 	int point;	//玩家所拥有的点数
 	unsigned int pos;	// 玩家当前位置，0为起点，向顺时针方向增长坐标
@@ -37,10 +37,10 @@ typedef struct Place{
 
 /* 定义游戏数据的结构体 */
 typedef struct Game{
-	int init_money;	// 每位玩家初始资金
+	int initial_money;	// 每位玩家初始资金
 	int player_num;	// 玩家个数
 	Player players[MAX_PLAYER_NUM];	// 玩家数据结构体数组
-	int current_player_index;	// 当前玩家的编号
+	int current_player_index;	// 当前玩家的下标
 	unsigned int place_num;	// 地图长度，即有效地块个数
 	Place map[MAX_PLACE_NUM];	// 地块数据结构体数组
 }Game;	// 游戏数据
