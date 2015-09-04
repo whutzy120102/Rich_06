@@ -24,18 +24,28 @@ void init_money(Game *game);
 void init_players(Game *game);
 
 /*
-*函数 void init_player(Game *game);
-*参数：game 指向游戏数据结构体的指针,id 当前玩家的id
-*作用：初始化游戏玩家的不重复数据
-*作者：唐家轩
+* 函数 void init_player(Game *game,int index,char number);
+* 参数：game 指向游戏数据结构体的指针
+* 参数：index 当前玩家的下标
+* 参数：number 当前玩家的名字标识
+* 作用：初始化游戏玩家的不重复数据
+* 作者：唐家轩
 */
-void init_player(Game *game,int id);
+void init_player(Game *game,int index,char number);
+
+/*
+* 函数 int analyse_players(char *number);
+* 参数：number 输入的玩家编号数组的指针
+* 作用：分析输入的玩家编号是否合法
+* 作者：唐家轩
+*/
+int analyse_players(char *number);
 
 /*
 * 函数 void init_map(Game *game);
 * 参数：game 指向游戏数据结构体的指针
 * 作用：初始化游戏中的地图数据
-* 作者：
+* 作者：唐家轩
 */
 void init_map(Game *game);
 
@@ -43,7 +53,7 @@ void init_map(Game *game);
 * 函数 void init_others(Game *game);
 * 参数：game 指向游戏数据结构体的指针
 * 作用：初始化游戏中的其他数据，程序所用的随机种子在此进行设置
-* 作者：
+* 作者：唐家轩
 */
 void init_others(Game *game);
 
