@@ -46,21 +46,26 @@ typedef struct Game{
 }Game;	// 游戏数据
 
 typedef enum{
-	START = 'S',	// 起点
-	LAND = '0',		// 空地
-	HOSPITAL = 'H',	// 医院
-	TOOLS_HOUSE = 'T',	// 道具屋
-	GIFT_HOUSE = 'G',	// 礼品屋
-	PRISON = 'P',	// 监狱
-	MINE = '$',		// 矿地
-	MAGIC_HOUSE = 'M',	// 魔法屋
+	START = 'S',	// 起点 'S'
+	LAND = '0',		// 空地 '0'
+	HOSPITAL = 'H',	// 医院 'H'
+	TOOLS_HOUSE = 'T',	// 道具屋 'T'
+	GIFT_HOUSE = 'G',	// 礼品屋 'G'
+	PRISON = 'P',	// 监狱 'P'
+	MINE = '$',		// 矿地 '$'
+	MAGIC_HOUSE = 'M',	// 魔法屋 'M'
 	OWN_LAND = 1,
 	OTHERS_LAND = 2
 }PLACE_TYPE;	// 地块类型，枚举类型
 
 typedef enum{
-	BLOCK = '#',	// 路障
-	BOMB = '@'		// 炸弹
-}TOOLS_TYPE;
+	BLOCK = '#',	// 路障 '#'
+	BOMB = '@'		// 炸弹 '@'
+}TOOLS_TYPE;	// 道具类型，枚举类型
+
+typedef enum{
+	NORMAL = 0,	// 正常
+	OUT = 1		// 已破产
+}PLAYER_STATUS;	// 玩家状态，枚举类型
 
 #endif
