@@ -22,7 +22,7 @@ int get_roll_number()
 */
 int get_tools_amount(Player *player)
 {
-	return player -> block_amount + player -> bomb_amount + player -> robot_amount;
+	return player->block_amount + player->bomb_amount + player->robot_amount;
 }
 
 /*
@@ -40,4 +40,16 @@ void str_tolower(char *str)
 		*temp = tolower(*temp);	// 将字母改为小写形式
 		temp++;
 	}
+}
+
+/*
+* 函数 int get_place_worth(Place *place);
+* 参数：place 指向地块数据结构体的指针，表示某一地块
+* 作用：获取指定地块的房产价值
+* 返回值：指定地块的房产价值
+* 作者：张泰然
+*/
+int get_place_worth(Place *place)
+{
+	return place->price * (place->type - '0');
 }

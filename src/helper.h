@@ -32,4 +32,13 @@ int get_tools_amount(Player *player);
 */
 void str_tolower(char *str);
 
+/*
+* 函数 int get_place_worth(Place *place);
+* 参数：place 指向地块数据结构体的指针，表示某一地块
+* 作用：获取指定地块的房产价值
+* 返回值：指定地块的房产价值
+* 作者：张泰然
+*/
+int get_place_worth(Place *place);
+
 #endif
