@@ -10,7 +10,6 @@
 */
 void output_map(Game *game)
 {
-<<<<<<< HEAD
 	int i;
 	char **map;
 	map = init_print_map(game);
@@ -20,9 +19,6 @@ void output_map(Game *game)
 	}
 	print(map);
 	return;
-=======
-
->>>>>>> whutzy/master
 }
 
 /*
@@ -33,7 +29,6 @@ void output_map(Game *game)
 */
 void show_current_player(Game *game)
 {
-<<<<<<< HEAD
 	Player current_player;
 	int current_player_index;
 	current_player_index = game->current_player_index;
@@ -50,12 +45,12 @@ char ** init_print_map(Game *game)
 	int i,j;
 	char **map;
 	int index_top,index_left,index_right,index_buttom;
-	index_top = 0; index_left = 67; index_right = 28; index_buttom = 61;
+	index_top = 0; index_left = 69; index_right = 29; index_buttom = 63;
 	map = (char**) malloc(8*sizeof(char*));
 	for(i=0;i<8;i++)
 	{
-		map[i] = (char*) malloc(28*sizeof(char));
-		for(j=0;j<28;j++)
+		map[i] = (char*) malloc(29*sizeof(char));
+		for(j=0;j<29;j++)
 		{
 			map[i][j] = ' ';
 			if(i == 0)
@@ -88,7 +83,7 @@ char ** init_print_map(Game *game)
 				}
 				index_left--;
 			}
-			if(j == 27 && i != 0 && i != 7)
+			if(j == 28 && i != 0 && i != 7)
 			{
 				map[i][j] = game->map[index_right].type;
 				//该土地上有道具 
@@ -109,23 +104,23 @@ char ** init_print_map(Game *game)
 void player_place(Player player,char **map)
 {
 	int index_top,index_left,index_right,index_buttom;
-	index_top = 0; index_left = 67; index_right = 29; index_buttom = 61; 
+	index_top = 0; index_left = 69; index_right = 29; index_buttom = 63; 
 	unsigned int pos = player.pos;
-	if(pos >= 0 && pos <= 27)
+	if(pos >= 0 && pos < 29)
 	{
 		map[0][pos] = player.acronym;
 	}
-	else if(pos > 27 && pos < 34)
+	else if(pos > 28 && pos < 35)
 	{
-		map[pos-27][27] = player.acronym;
+		map[pos-28][28] = player.acronym;
 	}
-	else if(pos > 33 && pos < 62)
+	else if(pos > 34 && pos < 64)
 	{
-		map[7][61-pos] = player.acronym;
+		map[7][63-pos] = player.acronym;
 	}
 	else
 	{
-		map[68-pos][0] = player.acronym;
+		map[70-pos][0] = player.acronym;
 	}
 	return;
 }
@@ -138,7 +133,7 @@ void print(char **map)
 	int i,j;
 	for(i=0;i<8;i++)
 	{
-		for(j=0;j<28;j++)
+		for(j=0;j<29;j++)
 		{
 			printf("%c ",map[i][j]);
 		}
@@ -146,7 +141,4 @@ void print(char **map)
 	}
 	return;
 }
-=======
->>>>>>> whutzy/master
 
-}
