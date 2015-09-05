@@ -10,6 +10,18 @@
 * 作用：初始化每位玩家的资金，初始资金范围1000 - 50000，默认10000
 * 作者：唐家轩
 */
+void main(){
+Game game;
+init_money(&game);
+init_map(&game);
+init_others(&game);
+output_map(&game);
+while(1)
+{
+
+
+}
+return 0;}
 void init_money(Game *game)
 {
 	int initial_money;
