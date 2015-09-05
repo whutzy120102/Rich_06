@@ -7,6 +7,21 @@
 
 #include "types.h"
 
+/**
+*初始化地图 
+**/
+char ** init_print_map(Game *game);
+
+/**
+*在map中标注玩家所在位置 
+**/
+void player_place(Player player,char **map);
+
+/**
+*打印地图 
+**/
+void print(char **map);
+
 /*
 * 函数 void output_map(Game *game);
 * 参数：game 指向游戏数据结构体的指针
@@ -23,4 +38,8 @@ void output_map(Game *game);
 */
 void show_current_player(Game *game);
 
+<<<<<<< HEAD
 #endif
+=======
+#endif
+>>>>>>> whutzy/master
