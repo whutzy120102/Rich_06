@@ -38,3 +38,8 @@ void output_map(Game *game);
 */
 void show_current_player(Game *game);
 
+
+#endif
+
+
+
