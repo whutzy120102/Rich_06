@@ -340,6 +340,8 @@ void eliminate_player(Game *game, Player *player)
 	player->block_amount = 0;
 	player->bomb_amount = 0;
 	player->robot_amount = 0;
+
+	game->player_num--;	// 减少玩家个数
 }
 
 /*
@@ -374,6 +376,7 @@ void sell(Game *game, int pos)
 			if (input[0] == 'Y' || input[0] == 'y')	// 玩家出售房产
 			{
 				sell_one_house(current_player, place);
+				printf("您出售了位于%d的房产\n", pos);
 			}
 			else	// 玩家不出售房产
 			{
