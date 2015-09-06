@@ -532,7 +532,7 @@ void next_player(Game *game)
 * 参数 game 指向游戏数据结构体的指针
 * 参数 number 放置的炸弹距离当前位置的土地数
 * 作用 放置炸弹
-* 作者
+* 作者 唐家轩
 */
 void place_bomb(Game *game,int number)
 {
@@ -558,7 +558,7 @@ void place_bomb(Game *game,int number)
 * 函数 void buy_bomb(Game *game);
 * 参数 game 指向游戏数据结构体的指针
 * 作用 购买炸弹
-* 作者
+* 作者 唐家轩
 */
 void buy_bomb(Game *game)
 {
@@ -575,5 +575,32 @@ void buy_bomb(Game *game)
 		}else{
 			printf("点数不足，无法购买\n");
 		}
+	}
+}
+
+/*
+* 函数 void gift(Game *game);
+* 参数 game 指向游戏数据结构体的指针
+* 作用 获取礼品
+* 作者 唐家轩
+*/
+void gift(Game *game)
+{
+	int flag;
+	printf("欢迎光临礼品屋！\n");
+	printf("请选择一件您喜欢的礼品：1、奖金2000；2、点数卡200\n");
+	scanf("%d",&flag);
+	switch(flag)
+	{
+	case 1:
+		game->players[game->current_player_index].money +=2000;
+		printf("获得奖金2000\n");
+		break;
+	case 2:
+		game->players[game->current_player_index].point +=200;
+		printf("获得点数卡200\n");
+		break;
+	default:
+		break;
 	}
 }

@@ -107,10 +107,9 @@ void play_round(Game *game, int id)
 			break;
 		case TOOLS_HOUSE:
 			buy_bomb(game);
-
 			break;
 		case GIFT_HOUSE:
-			printf("您来到礼品屋了！\n");
+			gift(game);
 			break;
 		case MINE:
 			game->players[game->current_player_index].point += place->price;
