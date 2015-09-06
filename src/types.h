@@ -14,6 +14,7 @@ typedef struct Player{
 	char name[7];	// 玩家姓名
 	int money;	// 玩家所拥有的资金
 	int point;	//玩家所拥有的点数
+	int days;	//玩家需要停留的天数
 	unsigned int pos;	// 玩家当前位置，0为起点，向顺时针方向增长坐标
 	char acronym;	// 玩家显示在屏幕上的符号
 	char status;	// 玩家的状态，例如在医院里为'H'，在监狱里为'P'
