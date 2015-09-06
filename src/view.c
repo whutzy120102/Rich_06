@@ -104,8 +104,8 @@ char ** init_print_map(Game *game)
 void player_place(Player player,char **map)
 {
 	int index_top,index_left,index_right,index_buttom;
-	index_top = 0; index_left = 69; index_right = 29; index_buttom = 63; 
 	unsigned int pos = player.pos;
+	index_top = 0; index_left = 69; index_right = 29; index_buttom = 63; 
 	if(pos >= 0 && pos < 29)
 	{
 		map[0][pos] = player.acronym;

@@ -135,4 +135,20 @@ void quit();
 */
 void next_player(Game *game);
 
+/*
+* 函数 void place_bomb(Game *game,int number);
+* 参数 game 指向游戏数据结构体的指针
+* 参数 number 放置的炸弹距离当前位置的土地数
+* 作用 放置炸弹
+* 作者
+*/
+void place_bomb(Game *game,int number);
+
+/*
+* 函数 void buy_bomb(Game *game);
+* 参数 game 指向游戏数据结构体的指针
+* 作用 购买炸弹
+* 作者
+*/
+void buy_bomb(Game *game);
 #endif

@@ -1,5 +1,6 @@
 #include "command.h"
 #include "helper.h"
+#include "view.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -72,9 +73,9 @@ void parse_command(Game *game, char *command)
 			sell(game, number);
 		}
 	}
-	else if (strstr(command, "step") != NULL)	// 输入命令为step n
+	else if (strstr(command, "bomb") != NULL)  //输入命令为bomb n
 	{
-		pchar = strstr(command, "step");
+		pchar = strstr(command, "bomb");
 		pchar += 4;
 		while (isspace(*pchar))
 		{
@@ -83,7 +84,7 @@ void parse_command(Game *game, char *command)
 		if (*pchar != '\0')
 		{
 			number = atoi(pchar);
-			step(game, number);
+			place_bomb(game, number);
 		}
 	}
 	else if (strstr(command, "quit") != NULL)	// 输入命令为quit
@@ -110,11 +111,19 @@ void roll(Game *game)
 
 	roll_number = get_roll_number();	// 获取掷骰子所获得的点数
 	current_player = &game->players[game->current_player_index];	// 找到当前玩家
-	
-	current_player->pos = (current_player->pos + roll_number) % game->place_num;	// 改变玩家的位置
-
-	printf("您前进了%d步\n", roll_number);
-	system("pause");	// 暂停以避免闪烁
+	if(game->map[(current_player->pos + roll_number) % game->place_num].tools_type != '@')
+	{
+		current_player->pos = (current_player->pos + roll_number) % game->place_num;	// 改变玩家的位置
+		printf("您前进了%d步\n", roll_number);
+	}else if(game->map[(current_player->pos + roll_number) % game->place_num].tools_type == '@')
+	{
+		current_player->days = 3;
+		current_player->pos = 14;	// 前往医院
+		current_player->status = HOSPITAL;
+		game->map[(current_player->pos + roll_number) % game->place_num].tools_type = NORMAL;
+		printf("踩到炸弹，前往医院休息3回合\n");
+	}
+	system("pause");
 
 	// 暂时不考虑路上有道具的情况
 
@@ -163,7 +172,6 @@ void buy_land(Game *game)
 	{
 		printf("您选择了不购买土地\n");
 	}
-	system("pause");	// 暂停以避免闪烁
 }
 
 /*
@@ -439,8 +447,19 @@ void step(Game *game, int number)
 	Player *current_player;	// 指向当前玩家
 
 	current_player = &game->players[game->current_player_index];	// 找到当前玩家
-	current_player->pos = (current_player->pos + number) % game->place_num;	// 改变玩家的位置
-	printf("您前进了%d步\n", number);
+	if(game->map[(current_player->pos + number) % game->place_num].tools_type != BOMB)
+	{
+		current_player->pos = (current_player->pos + number) % game->place_num;	// 改变玩家的位置
+		printf("您前进了%d步\n", number);
+	}else if(game->map[(current_player->pos + number) % game->place_num].tools_type == BOMB)
+	{
+		game->map[(current_player->pos + number) % game->place_num].tools_type = NORMAL;
+		current_player->days = 3;
+		current_player->pos = 14;	// 前往医院
+		current_player->status = HOSPITAL;
+		printf("踩到炸弹，前往医院休息3回合\n");
+	}
+	system("pause");
 }
 
 /*
@@ -485,5 +504,76 @@ void next_player(Game *game)
 	{
 		game->current_player_index = (game->current_player_index + 1) % game->player_num;
 		player = &game->players[game->current_player_index];	// 找到下一个玩家
+		if(player->status == HOSPITAL)
+		{
+			switch(player->days)
+			{
+			case 0:
+				player->status = NORMAL;
+				break;
+			case 1:
+			case 2:
+			case 3:
+				system("cls");
+				output_map(game);
+				printf("%s还需在医院休息%d回合......\n",player->name,player->days-1);
+				system("pause");
+				break;
+			default:
+				break;
+			}
+			player->days--;
+		}
 	} while (player->status != NORMAL);
+}
+
+/*
+* 函数 void place_bomb(Game *game,int number);
+* 参数 game 指向游戏数据结构体的指针
+* 参数 number 放置的炸弹距离当前位置的土地数
+* 作用 放置炸弹
+* 作者
+*/
+void place_bomb(Game *game,int number)
+{
+	Player *current_player;	// 指向当前玩家
+	current_player = &game->players[game->current_player_index];	// 找到当前玩家
+	if(current_player->bomb_amount>0)
+	{
+		if(number>=-10&&number<=10)
+		{
+			game->map[(current_player->pos+number) % game->place_num].tools_type=BOMB;
+			current_player->bomb_amount -= 1;
+			printf("成功放置炸弹!\n");
+		}else{
+			printf("放弃放置炸弹!\n");
+		}
+	}
+	else{
+		printf("没有炸弹，无法放置！\n");
+	}
+}
+
+/*
+* 函数 void buy_bomb(Game *game);
+* 参数 game 指向游戏数据结构体的指针
+* 作用 购买炸弹
+* 作者
+*/
+void buy_bomb(Game *game)
+{
+	char flag;
+	printf("您来到了道具屋！是否购买炸弹（Y or N):");
+	scanf("%c",&flag);
+	if(flag == 'Y'||flag == 'y')
+	{
+		if(game->players[game->current_player_index].point>=50)
+		{
+			game->players[game->current_player_index].bomb_amount += 1;
+			game->players[game->current_player_index].point -= 50;
+			printf("成功购买\n");
+		}else{
+			printf("点数不足，无法购买\n");
+		}
+	}
 }

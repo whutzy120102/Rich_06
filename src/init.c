@@ -46,8 +46,9 @@ void init_players(Game *game)
 		game->players[i].id=number[i]-'0';
 		game->players[i].money=game->initial_money;	// 玩家所拥有的资金
 		game->players[i].point=0;	//玩家所拥有的点数
+		game->players[i].days=0;
 		game->players[i].pos=0;	// 玩家当前位置，0为起点，向顺时针方向增长坐标
-		game->players[i].status=0;	// 玩家的状态，例如在医院里为'H'，在监狱里为'P'
+		game->players[i].status=NORMAL;	// 玩家的状态，例如在医院里为'H'，在监狱里为'P'
 		game->players[i].place_amount=0;	// 固定资产中的土地的数量
 		game->players[i].house_amount=0;	// 固定资产中的房屋的数量
 		game->players[i].block_amount=0;	// 玩家拥有的路障的数量
@@ -223,7 +224,7 @@ void init_map(Game *game)
 	game->map[64].price=20;
 	game->map[65].price=80;
 	game->map[66].price=100;
-	game->map[67].price=400;
+	game->map[67].price=40;
 	game->map[68].price=80;
 	game->map[69].price=60;
 }
