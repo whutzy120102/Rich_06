@@ -5,7 +5,7 @@
 #include "view.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include<string.h>
+#include <string.h>
 void play_round(Game *game,int id);
 
 int main()
@@ -30,7 +30,7 @@ int main()
 	   play_round(&game,game.current_player_index); //根据当前玩家下标，开始该玩家的回合 
 	    if(game.player_num<=1)        //如果游戏人数只有1人，判定为胜利者 
 	    {
-		   printf("恭喜%s，获得游戏胜利！",game.players[game.current_player_index].name); 
+		   printf("恭喜%s，获得游戏胜利！\n",game.players[game.current_player_index].name); 
 		   break;
 		} 
 		else next_player(&game);   //跳到下一玩家的回合 
@@ -53,7 +53,7 @@ void play_round(Game *game, int id)
 	output_map(game);
 	show_current_player(game);
 	str_tolower(get_command(command, 10));
-	while (command != NULL&&strcmp(command, "roll") != 0)  //在摇骰子之前，可以执行 很多命令 
+	while (strstr(command, "roll") == 0)  //在摇骰子之前，可以执行 很多命令 
 	{
 		parse_command(game, command);
 		system("cls");                //执行每个命令后清屏 
@@ -76,12 +76,15 @@ void play_round(Game *game, int id)
 			break;
 		case 'H':
 			printf("您来到了医院！");
+			system("pause");	// 暂停以避免闪烁
 			break;
 		case 'P':
 			printf("您来到了监狱！");
+			system("pause");	// 暂停以避免闪烁
 			break;
 		case '$':
 			printf("您正处于矿地上！");
+			system("pause");	// 暂停以避免闪烁
 			break;
 		}
 	}

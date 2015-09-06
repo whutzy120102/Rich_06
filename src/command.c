@@ -5,6 +5,9 @@
 #include <string.h>
 #include <ctype.h>
 
+/* 定义房产类型 */
+char *g_house_type[4] = { "空地", "茅屋", "洋房", "摩天楼" };
+
 /*
 * 函数 char *get_command(char *buffer, int length);
 * 参数：buffer 用来存储输入的命令的缓冲区
@@ -17,10 +20,10 @@ char *get_command(char *buffer, int length)
 {
 	char *temp;	// 用来指向缓冲区的指针
 
-	fflush(stdin);	// 清空输入缓冲区
 	do
 	{
 		temp = buffer;
+		fflush(stdin);	// 清空输入缓冲区
 		fgets(buffer, length, stdin);
 		while (*temp != '\0')
 		{
@@ -111,7 +114,7 @@ void roll(Game *game)
 	current_player->pos = (current_player->pos + roll_number) % game->place_num;	// 改变玩家的位置
 
 	printf("您前进了%d步\n", roll_number);
-	system("pause");
+	system("pause");	// 暂停以避免闪烁
 
 	// 暂时不考虑路上有道具的情况
 
@@ -129,13 +132,14 @@ void buy_land(Game *game)
 	Place *place;	// 指向玩家行走之后停留的地块，即要购买的地块
 	char input[10];
 
-	printf("该空地未被购买，您是否购买？若购买请输入Y或y，输入其他表示不购买：");
+	current_player = &game->players[game->current_player_index];	// 找到当前玩家
+	place = &game->map[current_player->pos];	// 找到要购买的地块
+
+	printf("该空地未被购买，您是否花费%d元购买？若购买请输入Y或y，输入其他表示不购买：", place->price);
+	fflush(stdin);	// 清空输入缓冲区
 	fgets(input, 10, stdin);
 	if (input[0] == 'Y' || input[0] == 'y')	// 玩家购买空地
 	{
-		current_player = &game->players[game->current_player_index];	// 找到当前玩家
-		place = &game->map[current_player->pos];	// 找到要购买的地块
-
 		if (place->type != LAND)	// 要购买的地块不是空地，不合法的操作
 		{
 			printf("该地块不是空地！\n");
@@ -148,6 +152,7 @@ void buy_land(Game *game)
 			place->owner = current_player;	// 将地块主人标记为当前玩家
 			current_player->place_amount++;	// 玩家土地数量增加
 			printf("土地购买成功！\n");
+			printf("您购买该块土地花费了%d元，剩余%d元的资金\n", place->price, current_player->money);
 		}
 		else	// 玩家资金不足
 		{
@@ -158,7 +163,7 @@ void buy_land(Game *game)
 	{
 		printf("您选择了不购买土地\n");
 	}
-	system("cls");
+	system("pause");	// 暂停以避免闪烁
 }
 
 /*
@@ -178,7 +183,8 @@ void update_land(Game *game)
 
 	if (place->type != '3')	// 该地块可升级
 	{
-		printf("该地块可以升级，您是否升级？若升级请输入Y或y，输入其他表示不升级：");
+		printf("该地块为%s，可以升级，您是否花费%d元升级？若升级请输入Y或y，输入其他表示不升级：", g_house_type[place->type - '0'], place->price);
+		fflush(stdin);	// 清空输入缓冲区
 		fgets(input, 10, stdin);
 		if (input[0] == 'Y' || input[0] == 'y')	// 玩家升级地块
 		{
@@ -190,7 +196,7 @@ void update_land(Game *game)
 				{
 					current_player->house_amount++;	// 玩家房屋数量增加
 				}
-				printf("土地升级成功！\n");
+				printf("土地升级成功！现在该地块为%s\n", g_house_type[place->type - '0']);
 			}
 			else	// 玩家资金不足
 			{
@@ -201,7 +207,7 @@ void update_land(Game *game)
 		{
 			printf("您选择了不升级地块\n");
 		}
-		system("cls");
+		system("pause");	// 暂停以避免闪烁
 	}
 }
 
@@ -225,6 +231,20 @@ void pay_others_land(Game *game)
 	place_owner = place->owner;		// 找到要支付过路费的地块的主人
 
 	outcome = get_place_worth(place) / 2;	 // 计算要支付的过路费，费用为该处房产价值的1/2
+	printf("您现在走到了%s的土地上，", place_owner->name);
+	switch (place->type)
+	{
+	case '0':
+		printf("该地块为空地，您无需支付过路费！\n");
+		system("pause");	// 暂停以避免闪烁
+		return;
+	case '1':
+	case '2':
+	case '3':
+		// 这三种情况执行的代码相同
+		printf("该处房产为%s，您需要支付过路费%d元\n", g_house_type[place->type - '0'], outcome);
+		break;
+	}
 	if (current_player->money >= outcome)	// 玩家能够付的起过路费
 	{
 		current_player->money -= outcome;
@@ -248,6 +268,7 @@ void pay_others_land(Game *game)
 			eliminate_player(game, current_player);
 		}
 	}
+	system("pause");	// 暂停以避免闪烁
 }
 
 /*
@@ -265,7 +286,7 @@ void sell_all_houses(Game *game, Player *player)
 	for (i = 1; i < game->place_num; i++)
 	{
 		place = &game->map[i];
-		if (place->owner == player)	// 当某块地的主人是该玩家时
+		if (place->owner == player && place->type != '0')	// 当某块地的主人是该玩家且不为空地时，要出售的是房产
 		{
 			sell_one_house(player, place);
 		}
@@ -347,7 +368,8 @@ void sell(Game *game, int pos)
 	{
 		if (place->type != LAND)	// 在不是空地的情况下才能出售房产
 		{
-			printf("您确定要出售位于%d的房产吗？若出售请输入Y或y，输入其他表示不出售：");
+			printf("您确定要出售位于%d的房产吗？若出售请输入Y或y，输入其他表示不出售：", pos);
+			fflush(stdin);	// 清空输入缓冲区
 			fgets(input, 10, stdin);
 			if (input[0] == 'Y' || input[0] == 'y')	// 玩家出售房产
 			{
@@ -392,24 +414,7 @@ void query(Game *game, Player *player)
 			place = &game->map[i];
 			if (place->owner == player)	// 当某块地的主人是该玩家时
 			{
-				switch (place->type)
-				{
-				case '0':
-					printf("\t空地\t%d\n", i);
-					break;
-				case '1':
-					printf("\t茅屋\t%d\n", i);
-					break;
-				case '2':
-					printf("\t洋房\t%d\n", i);
-					break;
-				case '3':
-					printf("\t摩天楼\t%d\n", i);
-					break;
-				default:
-					printf("程序中的数据存在错误！\n");
-					break;
-				}
+				printf("\t%s\t%d\n", g_house_type[place->type - '0'], i);
 			}
 		}
 	}
