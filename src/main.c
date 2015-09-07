@@ -52,6 +52,7 @@ void play_round(Game *game, int id)
 	Place *place;
 	char *pchar;	// 用于存储字符串中某命令字符串首次出现的地址
 	int number;	// 用于存储部分命令的参数
+	Player *current_player;	// 指向当前玩家
 
 	system("cls");
 	output_map(game);
@@ -101,7 +102,10 @@ void play_round(Game *game, int id)
 			printf("您来到了医院！\n");
 			break;
 		case PRISON:
-			printf("您来到了监狱！\n");
+			printf("您来到了监狱！休息两回合！\n");
+			current_player = &game->players[game->current_player_index];	// 找到当前玩家
+			current_player->status = PRISON;
+			current_player->days = 2;
 			break;
 		case MAGIC_HOUSE:
 			printf("您来到了魔法屋！\n");
