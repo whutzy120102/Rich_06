@@ -470,6 +470,7 @@ void help()
 	printf("roll\t掷骰子命令\n");
 	printf("sell n\t出售自己的任意房产，出售价格为投资总成本的2倍，n为房产在地图上的绝对位置\n");
 	printf("query\t显示自家资产信息\n");
+	printf("bomb n\t玩家放置炸弹到离当前位置前后10步的任何位置\n");
 	printf("help\t查看命令帮助\n");
 	printf("quit\t强制退出\n");
 	printf("step n\t遥控骰子，n为指定的步数\n");
@@ -501,7 +502,7 @@ void next_player(Game *game)
 	{
 		game->current_player_index = (game->current_player_index + 1) % game->player_num;
 		player = &game->players[game->current_player_index];	// 找到下一个玩家
-		if(player->status == HOSPITAL)
+		if(player->status == HOSPITAL||player->status ==PRISON)
 		{
 			switch(player->days)
 			{
@@ -509,11 +510,16 @@ void next_player(Game *game)
 				player->status = NORMAL;
 				break;
 			case 1:
+				system("cls");
+				output_map(game);
+				printf("%s下回合开始行动！\n",player->name);
+				system("pause");
+				break;
 			case 2:
 			case 3:
 				system("cls");
 				output_map(game);
-				printf("%s还需在医院休息%d回合......\n",player->name,player->days-1);
+				printf("%s还需要休息%d回合......\n",player->name,player->days-1);
 				system("pause");
 				break;
 			default:
