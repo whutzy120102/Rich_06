@@ -124,9 +124,6 @@ void roll(Game *game)
 		printf("踩到炸弹，前往医院休息3回合\n");
 	}
 	system("pause");
-
-	// 暂时不考虑路上有道具的情况
-
 }
 
 /*
@@ -542,7 +539,7 @@ void place_bomb(Game *game,int number)
 	{
 		if(number>=-10&&number<=10)
 		{
-			game->map[(current_player->pos+number) % game->place_num].tools_type=BOMB;
+			game->map[(current_player->pos + number + game->place_num) % game->place_num].tools_type = BOMB;
 			current_player->bomb_amount -= 1;
 			printf("成功放置炸弹!\n");
 		}else{
