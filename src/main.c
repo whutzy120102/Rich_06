@@ -15,6 +15,7 @@ int main()
 
 	// 初始化每位玩家的资金
 	init_money(&game);
+
 	// 初始化玩家
 	init_players(&game);
 	// 初始化地图
